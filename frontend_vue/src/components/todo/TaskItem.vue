@@ -110,7 +110,7 @@ function cancelEdit() {
   transition: border-color .18s ease, box-shadow .18s ease, transform .06s ease;
 }
 .item:hover {
-  border-color: rgba(37,99,235,.25);
+  border-color: rgba(37,99,235,.28);
   box-shadow: 0 2px 8px rgba(17,24,39,0.05);
 }
 

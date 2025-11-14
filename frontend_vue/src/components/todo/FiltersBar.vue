@@ -86,7 +86,8 @@ const filters: { key: TaskStatusFilter; label: string }[] = [
   background: #fff;
   color: var(--primary);
   box-shadow: 0 1px 4px rgba(0,0,0,.06);
-  border: 1px solid rgba(37,99,235,.15);
+  /* Ensure blue accent border for active tab */
+  border: 1px solid rgba(37,99,235,.22);
 }
 
 .count {

@@ -128,7 +128,8 @@ function clearCompleted() {
 
 .app-wrap {
   min-height: 100vh;
-  background: linear-gradient(135deg, rgba(59,130,246,0.08), #f9fafb 35%, #f9fafb);
+  /* blue 500/10 to gray-50 equivalent */
+  background: linear-gradient(135deg, rgba(37,99,235,0.10), #f9fafb 35%, #f9fafb);
   display: flex;
   flex-direction: column;
 }

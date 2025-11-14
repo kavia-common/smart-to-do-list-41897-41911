@@ -22,8 +22,9 @@
   display: grid;
   place-items: center;
   font-size: 1.5rem;
+  /* Blue to white subtle gradient */
   background: linear-gradient(135deg, rgba(37,99,235,.12), #fff);
-  border: 1px solid rgba(37,99,235,.2);
+  border: 1px solid rgba(37,99,235,.22);
   color: var(--primary);
 }
 .title {

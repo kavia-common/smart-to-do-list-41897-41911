@@ -86,15 +86,21 @@ function submit() {
   padding: .75rem 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform .06s ease, box-shadow .18s ease, opacity .18s ease;
-  box-shadow: 0 1px 2px rgba(37,99,235,.3);
+  transition: transform .06s ease, box-shadow .18s ease, opacity .18s ease, background-color .18s ease, filter .18s ease;
+  /* subtle blue shadow */
+  box-shadow: 0 1px 2px rgba(37,99,235,.28);
+}
+.add-btn:hover:enabled {
+  /* slightly darken on hover for contrast */
+  filter: brightness(0.95);
 }
 .add-btn:disabled {
   opacity: .6;
   cursor: not-allowed;
 }
-.add-btn:active {
+.add-btn:active:enabled {
   transform: translateY(1px);
+  filter: brightness(0.92);
 }
 
 .help {

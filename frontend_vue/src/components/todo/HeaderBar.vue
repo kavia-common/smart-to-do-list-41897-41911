@@ -29,9 +29,10 @@ defineProps<{
 }
 
 .logo {
+  /* Blue to soft gray gradient per theme guidance */
   background: linear-gradient(135deg, rgba(37,99,235,.15), rgba(243,244,246,1));
   color: var(--primary);
-  border: 1px solid rgba(37,99,235,.2);
+  border: 1px solid rgba(37,99,235,.22);
   width: 36px;
   height: 36px;
   border-radius: 10px;
