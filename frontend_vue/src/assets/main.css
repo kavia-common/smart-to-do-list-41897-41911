@@ -2,8 +2,8 @@
 
 :root {
   --primary: #2563EB;
-  --secondary: #F59E0B;
-  --success: #F59E0B;
+  --secondary: #F59E0B; /* keep amber as secondary/accent */
+  --success: var(--primary); /* standardize success accents to primary blue */
   --error: #EF4444;
   --bg: #f9fafb;
   --surface: #ffffff;

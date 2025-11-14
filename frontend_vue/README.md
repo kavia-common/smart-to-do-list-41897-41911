@@ -61,7 +61,8 @@ npm run preview
 
 Ocean Professional theme
 - primary #2563EB
-- secondary/success #F59E0B
+- secondary #F59E0B
+- success uses primary (#2563EB)
 - error #EF4444
 - background #f9fafb
 - surface #ffffff

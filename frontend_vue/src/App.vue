@@ -118,8 +118,8 @@ function clearCompleted() {
 /* Theme tokens - Ocean Professional */
 :root {
   --primary: #2563EB;
-  --secondary: #F59E0B;
-  --success: #F59E0B;
+  --secondary: #F59E0B; /* keep amber as secondary */
+  --success: var(--primary); /* success standardized to primary blue */
   --error: #EF4444;
   --bg: #f9fafb;
   --surface: #ffffff;
