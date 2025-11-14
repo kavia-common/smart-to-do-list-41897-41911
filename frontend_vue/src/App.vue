@@ -4,75 +4,52 @@ import FiltersBar from '@/components/todo/FiltersBar.vue'
 import TaskInput from '@/components/todo/TaskInput.vue'
 import TaskList from '@/components/todo/TaskList.vue'
 import EmptyState from '@/components/todo/EmptyState.vue'
-import { computed, onMounted, ref, watch } from 'vue'
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useTasksStore } from '@/stores/tasks'
+import type { TaskStatusFilter } from '@/types/task'
+
+const store = useTasksStore()
+const { filteredTasks, counts, filter } = storeToRefs(store)
+
+onMounted(() => {
+  // Load from backend if configured, otherwise from localStorage via API
+  store.load().catch(() => {
+    // ignore initial load errors to keep UI responsive
+  })
+})
 
 // PUBLIC_INTERFACE
-export type TaskStatusFilter = 'all' | 'active' | 'completed'
-
-export interface Task {
-  id: string
-  title: string
-  completed: boolean
-  createdAt: number
-  updatedAt: number
-}
-
-const STORAGE_KEY = 'todo.tasks.v1'
-const tasks = ref<Task[]>([])
-const filter = ref<TaskStatusFilter>('all')
-
-// persist and load
-onMounted(() => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) tasks.value = JSON.parse(raw)
-  } catch {
-    tasks.value = []
-  }
-})
-watch(
-  tasks,
-  (val) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(val))
-    } catch {
-      // ignore persistence errors
-    }
-  },
-  { deep: true }
-)
-
-const filteredTasks = computed(() => {
-  if (filter.value === 'active') return tasks.value.filter((t) => !t.completed)
-  if (filter.value === 'completed') return tasks.value.filter((t) => t.completed)
-  return tasks.value
-})
-
 function addTask(title: string) {
-  const now = Date.now()
-  const t: Task = {
-    id: crypto.randomUUID ? crypto.randomUUID() : `${now}-${Math.random()}`,
-    title: title.trim(),
-    completed: false,
-    createdAt: now,
-    updatedAt: now,
-  }
-  if (!t.title) return
-  tasks.value.unshift(t)
+  store.add(title).catch(() => {
+    // optionally show a toast; for now we keep silent to match minimal UI
+  })
 }
 
-function updateTask(id: string, payload: Partial<Pick<Task, 'title' | 'completed'>>) {
-  const idx = tasks.value.findIndex((t) => t.id === id)
-  if (idx === -1) return
-  tasks.value[idx] = { ...tasks.value[idx], ...payload, updatedAt: Date.now() }
+// PUBLIC_INTERFACE
+function updateTask(id: string, payload: Partial<{ title: string; completed: boolean }>) {
+  store.update(id, payload).catch(() => {
+    // optionally show a toast
+  })
 }
 
+// PUBLIC_INTERFACE
 function deleteTask(id: string) {
-  tasks.value = tasks.value.filter((t) => t.id !== id)
+  store.remove(id).catch(() => {
+    // optionally show a toast
+  })
 }
 
+// PUBLIC_INTERFACE
 function clearCompleted() {
-  tasks.value = tasks.value.filter((t) => !t.completed)
+  store.clearCompleted().catch(() => {
+    // optionally show a toast
+  })
+}
+
+// PUBLIC_INTERFACE
+function setFilter(f: TaskStatusFilter) {
+  store.setFilter(f)
 }
 </script>
 
@@ -84,12 +61,8 @@ function clearCompleted() {
         <TaskInput @add="addTask" />
         <FiltersBar
           :active-filter="filter"
-          :counts="{
-            all: tasks.length,
-            active: tasks.filter((t) => !t.completed).length,
-            completed: tasks.filter((t) => t.completed).length
-          }"
-          @change="(f) => (filter = f)"
+          :counts="counts"
+          @change="setFilter"
           @clear-completed="clearCompleted"
         />
         <template v-if="filteredTasks.length === 0">

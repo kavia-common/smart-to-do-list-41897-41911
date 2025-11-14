@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
-import type { Task } from '@/App.vue'
+import type { Task } from '@/types/task'
 
 const props = defineProps<{
   task: Task

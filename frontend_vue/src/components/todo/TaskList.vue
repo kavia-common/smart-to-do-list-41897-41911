@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TaskItem from './TaskItem.vue'
-import type { Task } from '@/App.vue'
+import type { Task } from '@/types/task'
 
 defineProps<{
   tasks: Task[]

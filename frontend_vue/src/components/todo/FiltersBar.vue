@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TaskStatusFilter } from '@/App.vue'
+import type { TaskStatusFilter } from '@/types/task'
 defineProps<{
   activeFilter: TaskStatusFilter
   counts: { all: number; active: number; completed: number }
